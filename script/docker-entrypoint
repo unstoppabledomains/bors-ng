@@ -6,4 +6,6 @@ set -ex
 # db_addr="${db_addr%%/*}"
 
 # dockerize -wait "tcp://$db_addr" true
+
+socat TCP-LISTEN:5432,reuseaddr,fork UNIX-CONNECT:/cloudsql/unstoppable-domains-staging:us-central1:unstoppable-util.s.PGSQL.5432 &
 exec "$@"

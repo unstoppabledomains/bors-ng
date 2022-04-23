@@ -5,7 +5,7 @@ FROM elixir:${ELIXIR_VERSION} as builder
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
-RUN apt-get update -q && apt-get --no-install-recommends install -y apt-utils ca-certificates build-essential libtool autoconf curl git
+RUN apt-get update -q && apt-get --no-install-recommends install -y apt-utils ca-certificates build-essential libtool autoconf curl git socat
 
 RUN DEBIAN_CODENAME=$(sed -n 's/VERSION=.*(\(.*\)).*/\1/p' /etc/os-release) && \
     curl -q https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
