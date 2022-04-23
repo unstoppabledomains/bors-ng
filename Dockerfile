@@ -5,7 +5,7 @@ FROM elixir:${ELIXIR_VERSION} as builder
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
-RUN apt-get update -q && apt-get --no-install-recommends install -y apt-utils ca-certificates build-essential libtool autoconf curl git socat
+RUN apt-get update -q && apt-get --no-install-recommends install -y apt-utils ca-certificates build-essential libtool autoconf curl git
 
 RUN DEBIAN_CODENAME=$(sed -n 's/VERSION=.*(\(.*\)).*/\1/p' /etc/os-release) && \
     curl -q https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
@@ -41,7 +41,7 @@ RUN if [ -d .git ]; then \
 ####
 
 FROM debian:buster-slim
-RUN apt-get update -q && apt-get --no-install-recommends install -y git-core libssl1.1 curl apt-utils ca-certificates
+RUN apt-get update -q && apt-get --no-install-recommends install -y git-core libssl1.1 curl apt-utils ca-certificates socat
 
 RUN curl -Ls https://github.com/bors-ng/dockerize/releases/download/v0.7.12/dockerize-linux-amd64-v0.7.12.tar.gz | \
     tar xzv -C /usr/local/bin
