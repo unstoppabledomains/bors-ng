@@ -1,0 +1,88 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: bors
+  namespace: '241559334828'
+  selfLink: /apis/serving.knative.dev/v1/namespaces/241559334828/services/bors
+  uid: 7b3c5c38-f4aa-4210-9800-5b5f4d2b9b86
+  resourceVersion: AAXeTP89WXk
+  generation: 48
+  creationTimestamp: '2022-04-22T23:20:18.226590Z'
+  labels:
+    cloud.googleapis.com/location: us-central1
+  annotations:
+    run.googleapis.com/client-name: cloud-console
+    client.knative.dev/user-image: gcr.io/unstoppable-domains-staging/bors@sha256:30af0b916ab15105549238e772d1d92f3b7fd92d1f548fb48c06129f3d72b26e
+    run.googleapis.com/launch-stage: BETA
+    run.googleapis.com/ingress: all
+    run.googleapis.com/ingress-status: all
+spec:
+  template:
+    metadata:
+      name: bors-00048-riz
+      annotations:
+        run.googleapis.com/client-name: cloud-console
+        autoscaling.knative.dev/minScale: '1'
+        run.googleapis.com/cloudsql-instances: unstoppable-domains-staging:us-central1:unstoppable-util
+        run.googleapis.com/execution-environment: gen2
+        autoscaling.knative.dev/maxScale: '5'
+    spec:
+      containerConcurrency: 80
+      timeoutSeconds: 300
+      serviceAccountName: bors-ng@unstoppable-domains-staging.iam.gserviceaccount.com
+      containers:
+      - image: gcr.io/unstoppable-domains-staging/bors@sha256:30af0b916ab15105549238e772d1d92f3b7fd92d1f548fb48c06129f3d72b26e
+        ports:
+        - name: http1
+          containerPort: 8000
+        env:
+        - name: PUBLIC_HOST
+          value: bors.ud-staging.com
+        - name: GITHUB_INTEGRATION_ID
+          value: '193934'
+        - name: GITHUB_INTEGRATION_PEM
+          value: XXXXXX
+        - name: GITHUB_CLIENT_ID
+          value: XXXXXX
+        - name: GITHUB_CLIENT_SECRET
+          value: XXXXXX
+        - name: GITHUB_WEBHOOK_SECRET
+          value: XXXXXX
+        - name: SECRET_KEY_BASE
+          value: XXXXXX
+        - name: DATABASE_URL
+          value: postgresql://bors:XXXXXX@127.0.0.1:5432/bors
+        - name: DATABASE_USE_SSL
+          value: 'false'
+        - name: ALLOW_PRIVATE_REPOS
+          value: 'true'
+        - name: USE_SQUASH_MERGE
+          value: 'true'
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+  traffic:
+  - percent: 100
+    latestRevision: true
+status:
+  observedGeneration: 48
+  conditions:
+  - type: Ready
+    status: 'True'
+    lastTransitionTime: '2022-05-06T00:32:44.644729Z'
+  - type: ConfigurationsReady
+    status: 'True'
+    lastTransitionTime: '2022-05-06T00:32:32.616650Z'
+  - type: RoutesReady
+    status: 'True'
+    lastTransitionTime: '2022-05-06T00:32:44.644729Z'
+  latestReadyRevisionName: bors-00048-riz
+  latestCreatedRevisionName: bors-00048-riz
+  traffic:
+  - revisionName: bors-00048-riz
+    percent: 100
+    latestRevision: true
+  url: https://bors-vf5eblhuka-uc.a.run.app
+  address:
+    url: https://bors-vf5eblhuka-uc.a.run.app
